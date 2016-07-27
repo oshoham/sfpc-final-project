@@ -12,8 +12,87 @@ void ofApp::setup(){
     params.add(potentiometer1.set("potentiometer1", 5, 0, 100));
     params.add(potentiometer2.set("potentiometer2", 5, 0, 100));
     panel.setup(params);
+    
+    // replace the string below with the serial port for your Arduino board
+    // you can get this from the Arduino application or via command line
+    // for OSX, in your terminal type "ls /dev/tty.*" to get a list of serial devices
+    ard.connect("/dev/tty.usbmodem1421", 57600);
+    
+    // listen for EInitialized notification. this indicates that
+    // the arduino is ready to receive commands and it is safe to
+    // call setupArduino()
+    ofAddListener(ard.EInitialized, this, &ofApp::setupArduino);
+    
+    bSetupArduino = false;
 }
 
+//--------------------------------------------------------------
+void ofApp::setupArduino(const int & version) {
+    // remove listener because we don't need it anymore
+    ofRemoveListener(ard.EInitialized, this, &ofApp::setupArduino);
+    
+    // it is now safe to send commands to the Arduino
+    bSetupArduino = true;
+    
+    // Note: pins A0 - A5 can be used as digital input and output.
+    // Refer to them as pins 14 - 19 if using StandardFirmata from Arduino 1.0.
+    // If using Arduino 0022 or older, then use 16 - 21.
+    // Firmata pin numbering changed in version 2.3 (which is included in Arduino 1.0)
+    
+    // set pins D4 and D6 to digital input
+    //    ard.sendDigitalPinMode(4, ARD_INPUT);
+    //    ard.sendDigitalPinMode(6, ARD_INPUT);
+    
+    // set pin D5 & D7 as digital output
+    
+    //ARD_ANALOG ?
+    ard.sendAnalogPinReporting(0, ARD_ANALOG);
+    ard.sendAnalogPinReporting(2, ARD_ANALOG);
+    
+    ard.sendDigitalPinMode(7, ARD_INPUT);
+    ard.sendDigitalPinMode(3, ARD_PWM);
+    ard.sendDigitalPinMode(5, ARD_PWM);
+    //    ard.sendDigitalPinMode(7, ARD_OUTPUT);
+    
+    // Listen for changes on the digital and analog pins
+    ofAddListener(ard.EDigitalPinChanged, this, &ofApp::digitalPinChanged);
+    ofAddListener(ard.EAnalogPinChanged, this, &ofApp::analogPinChanged);
+}
+
+//--------------------------------------------------------------
+void ofApp::updateArduino(){
+    // update the arduino, get any data or messages.
+    // the call to ard.update() is required
+    ard.update();
+    
+    // do not send anything until the arduino has been set up
+    if (bSetupArduino) {
+    }
+}
+
+// digital pin event handler, called whenever a digital pin value has changed
+// note: if an analog pin has been set as a digital pin, it will be handled
+// by the digitalPinChanged function rather than the analogPinChanged function.
+//--------------------------------------------------------------
+void ofApp::digitalPinChanged(const int & pinNum) {
+    int buttonState = ard.getDigital(pinNum);
+    if (buttonState == 1) {
+        mode = (mode + 1) % 4;
+    }
+}
+
+//--------------------------------------------------------------
+void ofApp::analogPinChanged(const int & pinNum) {
+    int val = ard.getAnalog(pinNum);
+    if (pinNum == 0) {
+        potentiometer1 = val;
+    }
+    else if (pinNum == 2) {
+        potentiometer2 = val;
+    }
+}
+
+//--------------------------------------------------------------
 void ofApp::modeChanged(int & value) {
     currentApp->cleanup();
 
@@ -32,6 +111,7 @@ void ofApp::modeChanged(int & value) {
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    updateArduino();
     currentApp->update(potentiometer1, potentiometer2);
 }
 

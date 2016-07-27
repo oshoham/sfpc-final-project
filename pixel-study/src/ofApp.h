@@ -27,7 +27,15 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
+        void setupArduino(const int & version);
+        void digitalPinChanged(const int & pinNum);
+        void analogPinChanged(const int & pinNum);
+        void updateArduino();
+    
         void modeChanged(int & value);
+    
+        ofArduino ard;
+        bool bSetupArduino;
     
         ofVideoGrabber grabber;
         opticalFlowApp flowApp;

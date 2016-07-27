@@ -56,9 +56,11 @@ void opticalFlowApp::draw(){
     pixels.mirror(false, true);
     ofRectangle viewport = ofGetCurrentViewport();
     for (int i = 0; i < particles.size(); i++) {
-        ofSetColor(pixels.getColor(particles[i].pos.x, particles[i].pos.y));
-        if (lines[i].getVertices().size() > 0) {
-            drawLineAsRect(lines[i].getVertices().front(), lines[i].getVertices().back(), lineWidths[i]);
+        if (viewport.inside(particles[i].pos)) {
+            ofSetColor(pixels.getColor(particles[i].pos.x, particles[i].pos.y));
+            if (lines[i].getVertices().size() > 0) {
+                drawLineAsRect(lines[i].getVertices().front(), lines[i].getVertices().back(), lineWidths[i]);
+            }
         }
     }
 }
