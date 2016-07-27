@@ -3,40 +3,48 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     grabber.setup(ofGetWidth(), ofGetHeight());
-    currentApp = &mosaicApp;
+    currentApp = &flowApp;
     currentApp->setup(grabber);
     
-    mode = 1;
+    mode.addListener(this, &ofApp::modeChanged);
+    mode = 0;
+    
+    params.add(potentiometer1.set("potentiometer1", 5, 0, 100));
+    params.add(potentiometer2.set("potentiometer2", 5, 0, 100));
+    panel.setup(params);
+}
+
+void ofApp::modeChanged(int & value) {
+    currentApp->cleanup();
+
+    if (mode == 0) {
+        currentApp = &flowApp;
+    } else if (mode == 1) {
+        currentApp = &mosaicApp;
+    } else if (mode == 2) {
+        currentApp = &waveApp;
+    } else if (mode == 3) {
+        currentApp = &vorApp;
+    }
+    
+    currentApp->setup(grabber);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    currentApp->update();
+    currentApp->update(potentiometer1, potentiometer2);
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
     currentApp->draw();
+    panel.draw();
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    if (key == '1') {
-        currentApp->cleanup();
-        currentApp = &flowApp;
-        currentApp->setup(grabber);
-    } else if (key == '2') {
-        currentApp->cleanup();
-        currentApp = &mosaicApp;
-        currentApp->setup(grabber);
-    } else if (key == '3') {
-        currentApp->cleanup();
-        currentApp = &waveApp;
-        currentApp->setup(grabber);
-    } else if (key == '4') {
-        currentApp->cleanup();
-        currentApp = &vorApp;
-        currentApp->setup(grabber);
+    if (key == ' ') {
+        mode = (mode + 1) % 4;
     }
 }
 

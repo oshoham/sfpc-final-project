@@ -47,7 +47,7 @@ void asciiMosaicApp::setup(ofVideoGrabber videoGrabber){
 }
 
 //--------------------------------------------------------------
-void asciiMosaicApp::update(){
+void asciiMosaicApp::update(float potentiometer1, float potentiometer2){
     grabber.update();
 }
 

@@ -90,7 +90,7 @@ ofPoint voronoiApp::sample(int x, int y) {
 }
 
 //--------------------------------------------------------------
-void voronoiApp::update(){
+void voronoiApp::update(float potentiometer1, float potentiometer2){
     grabber.update();
     
     for (int i = 0; i < 10; i++) {

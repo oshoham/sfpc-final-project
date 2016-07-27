@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxGui.h"
 #include "subApp.h"
 #include "opticalFlowApp.h"
 #include "asciiMosaicApp.h"
@@ -25,10 +26,8 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-		
-        float potentiometer1;
-        float potentiometer2;
-        int mode;
+    
+        void modeChanged(int & value);
     
         ofVideoGrabber grabber;
         opticalFlowApp flowApp;
@@ -36,4 +35,10 @@ class ofApp : public ofBaseApp{
         energyWaveApp waveApp;
         voronoiApp vorApp;
         subApp * currentApp;
+    
+        ofxPanel panel;
+        ofParameterGroup params;
+        ofParameter<float> potentiometer1;
+        ofParameter<float> potentiometer2;
+        ofParameter<int> mode;
 };

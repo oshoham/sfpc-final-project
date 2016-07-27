@@ -20,7 +20,7 @@ void energyWaveApp::setup(ofVideoGrabber videoGrabber){
 }
 
 //--------------------------------------------------------------
-void energyWaveApp::update(){
+void energyWaveApp::update(float potentiometer1, float potentiometer2){
     grabber.update();
     
     ofPixels pixels = grabber.getPixels();

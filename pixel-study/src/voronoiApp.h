@@ -9,7 +9,7 @@
 class voronoiApp : public subApp {
     public:
         void setup(ofVideoGrabber videoGrabber);
-        void update();
+        void update(float potentiometer1, float potentiometer2);
         void draw();
         void cleanup();
         

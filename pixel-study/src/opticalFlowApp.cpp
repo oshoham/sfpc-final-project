@@ -20,7 +20,7 @@ void opticalFlowApp::setup(ofVideoGrabber videoGrabber){
 }
 
 //--------------------------------------------------------------
-void opticalFlowApp::update(){
+void opticalFlowApp::update(float potentiometer1, float potentiometer2){
     grabber.update();
     if (grabber.isFrameNew()) {
         ofPixels pixels = grabber.getPixels();
