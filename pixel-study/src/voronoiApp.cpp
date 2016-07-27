@@ -2,7 +2,7 @@
 #include "ofxVoronoi.h"
 
 //--------------------------------------------------------------
-void voronoiApp::setup(ofVideoGrabber videoGrabber){
+void voronoiApp::setup(ofBaseVideoGrabber * videoGrabber){
     grabber = videoGrabber;
     
     k = 30;
@@ -91,7 +91,7 @@ ofPoint voronoiApp::sample(int x, int y) {
 
 //--------------------------------------------------------------
 void voronoiApp::update(float potentiometer1, float potentiometer2){
-    grabber.update();
+    grabber->update();
     
     for (int i = 0; i < 10; i++) {
         ofPoint s = poissonDiscSample();
@@ -107,7 +107,7 @@ void voronoiApp::draw(){
     ofBackground(0);
     ofSetColor(255);
     
-    ofPixels pixels = grabber.getPixels();
+    ofPixels pixels = grabber->getPixels();
     pixels.mirror(false, true);
     
     ofxVoronoi voronoi;

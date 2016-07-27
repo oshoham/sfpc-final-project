@@ -8,14 +8,14 @@
 
 class opticalFlowApp: public subApp {
     public:
-        void setup(ofVideoGrabber videoGrabber);
+        void setup(ofBaseVideoGrabber * videoGrabber);
         void update(float potentiometer1, float potentiometer2);
         void draw();
         void cleanup();
         
         void drawLineAsRect(ofPoint startVec, ofPoint endVec, float thickness);
         
-        ofVideoGrabber grabber;
+        ofBaseVideoGrabber * grabber;
         ofxOpticalFlowFarneback flowSolver;
         vector<particle> particles;
         vector<ofPolyline> lines;

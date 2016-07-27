@@ -6,7 +6,7 @@
 
 class energyWaveApp : public subApp {
     public:
-        void setup(ofVideoGrabber videoGrabber);
+        void setup(ofBaseVideoGrabber * videoGrabber);
         void update(float potentiometer1, float potentiometer2);
         void draw();
         void cleanup();
@@ -15,7 +15,7 @@ class energyWaveApp : public subApp {
     
         int pixelStep;
     
-        ofVideoGrabber grabber;
+        ofBaseVideoGrabber * grabber;
         vector<vector<ofColor>> pixelColors;
         vector<vector<float>> energy;
         int drawMode;

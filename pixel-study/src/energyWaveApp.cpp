@@ -1,16 +1,16 @@
 #include "energyWaveApp.h"
 
 //--------------------------------------------------------------
-void energyWaveApp::setup(ofVideoGrabber videoGrabber){
+void energyWaveApp::setup(ofBaseVideoGrabber * videoGrabber){
     grabber = videoGrabber;
     
     ofSetRectMode(OF_RECTMODE_CENTER);
     pixelStep = 10;
-    pixelColors = vector<vector<ofColor>>(grabber.getWidth(), vector<ofColor>(grabber.getHeight()));
-    energy = vector<vector<float>>(grabber.getWidth(), vector<float>(grabber.getHeight()));
+    pixelColors = vector<vector<ofColor>>(grabber->getWidth(), vector<ofColor>(grabber->getHeight()));
+    energy = vector<vector<float>>(grabber->getWidth(), vector<float>(grabber->getHeight()));
     
-    for (int i = 0; i < grabber.getWidth(); i++) {
-        for (int j = 0; j < grabber.getHeight(); j++) {
+    for (int i = 0; i < grabber->getWidth(); i++) {
+        for (int j = 0; j < grabber->getHeight(); j++) {
             pixelColors[i][j] = ofColor::fromHsb((ofRandom(180, 360) / 360.0) * 255, (ofRandom(80, 100) / 100.0) * 255, (ofRandom(50, 90) / 100.0) * 255);
             energy[i][j] = 0;
         }
@@ -21,20 +21,23 @@ void energyWaveApp::setup(ofVideoGrabber videoGrabber){
 
 //--------------------------------------------------------------
 void energyWaveApp::update(float potentiometer1, float potentiometer2){
-    grabber.update();
+    grabber->update();
     
-    ofPixels pixels = grabber.getPixels();
+    drawMode = ofMap(potentiometer1, 0, 100, 1, 4);
+    float cutoff = ofMap(potentiometer2, 0, 100, 0.1, 0.9);
+    
+    ofPixels pixels = grabber->getPixels();
     pixels.mirror(false, true);
     
-    for (int i = 0; i < grabber.getWidth(); i+=pixelStep) {
-        for (int j = 0; j < grabber.getHeight(); j+=pixelStep) {
+    for (int i = 0; i < grabber->getWidth(); i+=pixelStep) {
+        for (int j = 0; j < grabber->getHeight(); j+=pixelStep) {
             for (int k = 0; k < pixelStep; k++) {
                 for (int l = 0; l < pixelStep; l++) {
                     energy[i+k][j+l] *= 0.99;
                     
                     // modifying this value will affect how long the afterimages last
                     // a higher value means a shorter afterimage
-                    if (energy[i+k][j+l] < 0.5) {
+                    if (energy[i+k][j+l] < cutoff) { // 0.5
                         energy[i+k][j+l] = 0;
                     }
                     
@@ -47,18 +50,19 @@ void energyWaveApp::update(float potentiometer1, float potentiometer2){
             }
         }
     }
+    
 }
 
 //--------------------------------------------------------------
 void energyWaveApp::draw(){
     ofBackground(0);
     
-    ofPixels pixels = grabber.getPixels();
+    ofPixels pixels = grabber->getPixels();
     pixels.mirror(false, true);
     
     // proper way to mosaic is to average the image, but we're just gonna step by 10
-    for (int i = 0; i < grabber.getWidth(); i+=pixelStep) {
-        for (int j = 0; j < grabber.getHeight(); j+=pixelStep) {
+    for (int i = 0; i < grabber->getWidth(); i+=pixelStep) {
+        for (int j = 0; j < grabber->getHeight(); j+=pixelStep) {
             int brightness = pixels.getColor(i, j).getBrightness();
             
             // modifying pct will affect the frequency and duration of the afterimages
@@ -107,56 +111,56 @@ void energyWaveApp::cleanup(){
 //--------------------------------------------------------------
 void energyWaveApp::keyPressed(int key){
     if (key == '1') {
-        for (int i = 0; i < grabber.getWidth(); i++) {
-            for (int j = 0; j < grabber.getHeight(); j++) {
+        for (int i = 0; i < grabber->getWidth(); i++) {
+            for (int j = 0; j < grabber->getHeight(); j++) {
                 pixelColors[i][j] = ofColor::fromHsb((ofRandom(360) / 360.0) * 255, (ofRandom(100) / 100.0) * 255, (ofRandom(100) / 100.0) * 255);
             }
         }
     } else if (key == '2') {
-        for (int i = 0; i < grabber.getWidth(); i++) {
-            for (int j = 0; j < grabber.getHeight(); j++) {
+        for (int i = 0; i < grabber->getWidth(); i++) {
+            for (int j = 0; j < grabber->getHeight(); j++) {
                 pixelColors[i][j] = ofColor::fromHsb((ofRandom(120, 270) / 360.0) * 255, (ofRandom(80, 100) / 100.0) * 255, 255);
             }
         }
     } else if (key == '3') {
-        for (int i = 0; i < grabber.getWidth(); i++) {
-            for (int j = 0; j < grabber.getHeight(); j++) {
+        for (int i = 0; i < grabber->getWidth(); i++) {
+            for (int j = 0; j < grabber->getHeight(); j++) {
                 pixelColors[i][j] = ofColor::fromHsb((ofRandom(360) / 360.0) * 255, 255, (ofRandom(100) / 100.0) * 255);
             }
         }
     } else if (key == '4') {
-        for (int i = 0; i < grabber.getWidth(); i++) {
-            for (int j = 0; j < grabber.getHeight(); j++) {
+        for (int i = 0; i < grabber->getWidth(); i++) {
+            for (int j = 0; j < grabber->getHeight(); j++) {
                 pixelColors[i][j] = ofColor::fromHsb(0, 0, (ofRandom(100) / 100.0) * 255);
             }
         }
     } else if (key == '5') {
-        for (int i = 0; i < grabber.getWidth(); i++) {
-            for (int j = 0; j < grabber.getHeight(); j++) {
+        for (int i = 0; i < grabber->getWidth(); i++) {
+            for (int j = 0; j < grabber->getHeight(); j++) {
                 pixelColors[i][j] = ofColor::fromHsb((195 / 360.0) * 255, 255, (ofRandom(100) / 100.0) * 255);
             }
         }
     } else if (key == '6') {
-        for (int i = 0; i < grabber.getWidth(); i++) {
-            for (int j = 0; j < grabber.getHeight(); j++) {
+        for (int i = 0; i < grabber->getWidth(); i++) {
+            for (int j = 0; j < grabber->getHeight(); j++) {
                 pixelColors[i][j] = ofColor::fromHsb((195 / 360.0) * 255, (ofRandom(100) / 100.0) * 255, 255);
             }
         }
     } else if (key == '7') {
-        for (int i = 0; i < grabber.getWidth(); i++) {
-            for (int j = 0; j < grabber.getHeight(); j++) {
+        for (int i = 0; i < grabber->getWidth(); i++) {
+            for (int j = 0; j < grabber->getHeight(); j++) {
                 pixelColors[i][j] = ofColor::fromHsb((ofRandom(180) / 360.0) * 255, 255, (ofRandom(100) / 100.0) * 255);
             }
         }
     } else if (key == '8') {
-        for (int i = 0; i < grabber.getWidth(); i++) {
-            for (int j = 0; j < grabber.getHeight(); j++) {
+        for (int i = 0; i < grabber->getWidth(); i++) {
+            for (int j = 0; j < grabber->getHeight(); j++) {
                 pixelColors[i][j] = ofColor::fromHsb((ofRandom(180, 360) / 360.0) * 255, (ofRandom(80, 100) / 100.0) * 255, (ofRandom(50, 90) / 100.0) * 255);
             }
         }
     } else if (key == '9') {
-        for (int i = 0; i < grabber.getWidth(); i++) {
-            for (int j = 0; j < grabber.getHeight(); j++) {
+        for (int i = 0; i < grabber->getWidth(); i++) {
+            for (int j = 0; j < grabber->getHeight(); j++) {
                 if (floor(ofRandom(2)) == 0) {
                     pixelColors[i][j] = ofColor::fromHsb((ofRandom(270, 360) / 360.0) * 255, (ofRandom(80, 100) / 100.0) * 255, 255);
                 } else {

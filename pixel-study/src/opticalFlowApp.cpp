@@ -1,10 +1,10 @@
 #include "opticalFlowApp.h"
 
 //--------------------------------------------------------------
-void opticalFlowApp::setup(ofVideoGrabber videoGrabber){
+void opticalFlowApp::setup(ofBaseVideoGrabber * videoGrabber){
     grabber = videoGrabber;
     
-    flowSolver.setup(grabber.getWidth(), grabber.getHeight(), 0.35, 5, 10, 1, 3, 2.25, false, false);
+    flowSolver.setup(grabber->getWidth(), grabber->getHeight(), 0.35, 5, 10, 1, 3, 2.25, false, false);
     ofSetBackgroundAuto(false);
     
     for (int i = 0; i < 2000; i++) {
@@ -21,9 +21,9 @@ void opticalFlowApp::setup(ofVideoGrabber videoGrabber){
 
 //--------------------------------------------------------------
 void opticalFlowApp::update(float potentiometer1, float potentiometer2){
-    grabber.update();
-    if (grabber.isFrameNew()) {
-        ofPixels pixels = grabber.getPixels();
+    grabber->update();
+    if (grabber->isFrameNew()) {
+        ofPixels pixels = grabber->getPixels();
         pixels.mirror(false, true);
         frame.setFromPixels(pixels);
         flowSolver.update(frame);
@@ -52,7 +52,7 @@ void opticalFlowApp::update(float potentiometer1, float potentiometer2){
 
 //--------------------------------------------------------------
 void opticalFlowApp::draw(){
-    ofPixels pixels = grabber.getPixels();
+    ofPixels pixels = grabber->getPixels();
     pixels.mirror(false, true);
     ofRectangle viewport = ofGetCurrentViewport();
     for (int i = 0; i < particles.size(); i++) {

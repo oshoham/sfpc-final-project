@@ -4,7 +4,7 @@
 void ofApp::setup(){
     grabber.setup(ofGetWidth(), ofGetHeight());
     currentApp = &flowApp;
-    currentApp->setup(grabber);
+    currentApp->setup(&grabber);
     
     mode.addListener(this, &ofApp::modeChanged);
     mode = 0;
@@ -27,7 +27,7 @@ void ofApp::modeChanged(int & value) {
         currentApp = &vorApp;
     }
     
-    currentApp->setup(grabber);
+    currentApp->setup(&grabber);
 }
 
 //--------------------------------------------------------------
