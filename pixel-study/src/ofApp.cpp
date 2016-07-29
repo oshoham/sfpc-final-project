@@ -9,14 +9,14 @@ void ofApp::setup(){
     mode.addListener(this, &ofApp::modeChanged);
     mode = 0;
     
-    params.add(potentiometer1.set("potentiometer1", 5, 0, 100));
-    params.add(potentiometer2.set("potentiometer2", 5, 0, 100));
+    params.add(potentiometer1.set("potentiometer1", 0, 0, 1023));
+    params.add(potentiometer2.set("potentiometer2", 0, 0, 1023));
     panel.setup(params);
     
     // replace the string below with the serial port for your Arduino board
     // you can get this from the Arduino application or via command line
     // for OSX, in your terminal type "ls /dev/tty.*" to get a list of serial devices
-    ard.connect("/dev/tty.usbmodem1421", 57600);
+    ard.connect("/dev/tty.usbmodem1411", 57600);
     
     // listen for EInitialized notification. this indicates that
     // the arduino is ready to receive commands and it is safe to
@@ -24,6 +24,7 @@ void ofApp::setup(){
     ofAddListener(ard.EInitialized, this, &ofApp::setupArduino);
     
     bSetupArduino = false;
+    lastButtonPress = ofGetElapsedTimef();
 }
 
 //--------------------------------------------------------------
@@ -46,13 +47,11 @@ void ofApp::setupArduino(const int & version) {
     // set pin D5 & D7 as digital output
     
     //ARD_ANALOG ?
-    ard.sendAnalogPinReporting(0, ARD_ANALOG);
     ard.sendAnalogPinReporting(2, ARD_ANALOG);
+    ard.sendAnalogPinReporting(3, ARD_ANALOG);
     
-    ard.sendDigitalPinMode(7, ARD_INPUT);
-    ard.sendDigitalPinMode(3, ARD_PWM);
-    ard.sendDigitalPinMode(5, ARD_PWM);
-    //    ard.sendDigitalPinMode(7, ARD_OUTPUT);
+    ard.sendDigitalPinMode(2, ARD_INPUT);
+    ard.sendDigital(2, ARD_HIGH); // connect internal pull-up resistor
     
     // Listen for changes on the digital and analog pins
     ofAddListener(ard.EDigitalPinChanged, this, &ofApp::digitalPinChanged);
@@ -76,18 +75,21 @@ void ofApp::updateArduino(){
 //--------------------------------------------------------------
 void ofApp::digitalPinChanged(const int & pinNum) {
     int buttonState = ard.getDigital(pinNum);
-    if (buttonState == 1) {
+    float now = ofGetElapsedTimef();
+    
+    if (pinNum == 2 && buttonState == ARD_LOW && now - lastButtonPress > 0.5) {
         mode = (mode + 1) % 4;
+        lastButtonPress = now;
     }
 }
 
 //--------------------------------------------------------------
 void ofApp::analogPinChanged(const int & pinNum) {
     int val = ard.getAnalog(pinNum);
-    if (pinNum == 0) {
+    if (pinNum == 2) {
         potentiometer1 = val;
     }
-    else if (pinNum == 2) {
+    else if (pinNum == 3) {
         potentiometer2 = val;
     }
 }

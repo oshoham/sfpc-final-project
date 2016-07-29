@@ -23,8 +23,8 @@ void energyWaveApp::setup(ofBaseVideoGrabber * videoGrabber){
 void energyWaveApp::update(float potentiometer1, float potentiometer2){
     grabber->update();
     
-    drawMode = ofMap(potentiometer1, 0, 100, 1, 4);
-    float cutoff = ofMap(potentiometer2, 0, 100, 0.1, 0.9);
+    drawMode = ofMap(potentiometer2, 0, 1023, 1, 4);
+    float cutoff = ofMap(potentiometer1, 0, 1023, 0.1, 0.9);
     
     ofPixels pixels = grabber->getPixels();
     pixels.mirror(false, true);

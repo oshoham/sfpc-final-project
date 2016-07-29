@@ -37,6 +37,8 @@ class ofApp : public ofBaseApp{
         ofArduino ard;
         bool bSetupArduino;
     
+        float lastButtonPress;
+    
         ofVideoGrabber grabber;
         opticalFlowApp flowApp;
         asciiMosaicApp mosaicApp;
@@ -46,7 +48,7 @@ class ofApp : public ofBaseApp{
     
         ofxPanel panel;
         ofParameterGroup params;
-        ofParameter<float> potentiometer1;
-        ofParameter<float> potentiometer2;
+        ofParameter<int> potentiometer1;
+        ofParameter<int> potentiometer2;
         ofParameter<int> mode;
 };
