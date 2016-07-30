@@ -93,13 +93,14 @@ ofPoint voronoiApp::sample(int x, int y) {
 void voronoiApp::update(float potentiometer1, float potentiometer2){
     grabber->update();
     
-    for (int i = 0; i < 10; i++) {
-        ofPoint s = poissonDiscSample();
-        if (s.x != -1 && s.y != -1) {
-            points.push_back(s);
+    if (points.size() < 10000) {
+        for (int i = 0; i < 10; i++) {
+            ofPoint s = poissonDiscSample();
+            if (s.x != -1 && s.y != -1) {
+                points.push_back(s);
+            }
         }
     }
-    
 }
 
 //--------------------------------------------------------------
