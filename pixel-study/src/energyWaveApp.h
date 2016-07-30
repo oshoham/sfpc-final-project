@@ -13,12 +13,15 @@ class energyWaveApp : public subApp {
     
         void keyPressed(int key);
     
+        void setColorMode();
+    
         int pixelStep;
     
         ofBaseVideoGrabber * grabber;
         vector<vector<ofColor>> pixelColors;
         vector<vector<float>> energy;
         int drawMode;
+        int colorMode;
 };
 
 
