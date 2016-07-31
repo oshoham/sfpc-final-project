@@ -537,6 +537,70 @@
 				<key>sourceTree</key>
 				<string>SOURCE_ROOT</string>
 			</dict>
+			<key>2216136FB9A9BCE3AE0920FA</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.c.h</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>ofxTrueTypeFontUC.h</string>
+				<key>path</key>
+				<string>../../../of_v0.9.3_osx_release/addons/ofxTrueTypeFontUC/src/ofxTrueTypeFontUC.h</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>0816FAE6729FD8D7120D0B77</key>
+			<dict>
+				<key>children</key>
+				<array>
+					<string>DDADE566B025CE6BDC7B2202</string>
+					<string>2216136FB9A9BCE3AE0920FA</string>
+				</array>
+				<key>isa</key>
+				<string>PBXGroup</string>
+				<key>name</key>
+				<string>src</string>
+				<key>sourceTree</key>
+				<string>&lt;group&gt;</string>
+			</dict>
+			<key>95D87FD7121C8B2D7D5F155C</key>
+			<dict>
+				<key>children</key>
+				<array>
+					<string>0816FAE6729FD8D7120D0B77</string>
+				</array>
+				<key>isa</key>
+				<string>PBXGroup</string>
+				<key>name</key>
+				<string>ofxTrueTypeFontUC</string>
+				<key>sourceTree</key>
+				<string>&lt;group&gt;</string>
+			</dict>
+			<key>9612BB19B520FE1378478891</key>
+			<dict>
+				<key>fileRef</key>
+				<string>DDADE566B025CE6BDC7B2202</string>
+				<key>isa</key>
+				<string>PBXBuildFile</string>
+			</dict>
+			<key>DDADE566B025CE6BDC7B2202</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.cpp.cpp</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>ofxTrueTypeFontUC.cpp</string>
+				<key>path</key>
+				<string>../../../of_v0.9.3_osx_release/addons/ofxTrueTypeFontUC/src/ofxTrueTypeFontUC.cpp</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
 			<key>D2CE0C5A42DB25C3B10432B5</key>
 			<dict>
 				<key>explicitFileType</key>
@@ -4400,6 +4464,7 @@
 					<string>480A780D8D0308AE4A368801</string>
 					<string>A0B90D3B0ADB9C1716816714</string>
 					<string>F101E50AAB10B98FD0322FB8</string>
+					<string>95D87FD7121C8B2D7D5F155C</string>
 					<string>33A9136E9711EC12A4D83980</string>
 				</array>
 				<key>isa</key>
@@ -4593,6 +4658,7 @@
 						<string>../../../of_v0.9.3_osx_release/addons/ofxOpenCv/libs/opencv/license</string>
 						<string>../../../of_v0.9.3_osx_release/addons/ofxOpenCv/src</string>
 						<string>../../../of_v0.9.3_osx_release/addons/ofxOpticalFlowFarneback/src</string>
+						<string>../../../of_v0.9.3_osx_release/addons/ofxTrueTypeFontUC/src</string>
 						<string>../../../of_v0.9.3_osx_release/addons/ofxVoronoi/libs</string>
 						<string>../../../of_v0.9.3_osx_release/addons/ofxVoronoi/libs/Voro++2D</string>
 						<string>../../../of_v0.9.3_osx_release/addons/ofxVoronoi/src</string>
@@ -4692,6 +4758,7 @@
 						<string>../../../of_v0.9.3_osx_release/addons/ofxOpenCv/libs/opencv/license</string>
 						<string>../../../of_v0.9.3_osx_release/addons/ofxOpenCv/src</string>
 						<string>../../../of_v0.9.3_osx_release/addons/ofxOpticalFlowFarneback/src</string>
+						<string>../../../of_v0.9.3_osx_release/addons/ofxTrueTypeFontUC/src</string>
 						<string>../../../of_v0.9.3_osx_release/addons/ofxVoronoi/libs</string>
 						<string>../../../of_v0.9.3_osx_release/addons/ofxVoronoi/libs/Voro++2D</string>
 						<string>../../../of_v0.9.3_osx_release/addons/ofxVoronoi/src</string>
@@ -4772,6 +4839,7 @@
 					<string>D7D14AD0BCEFF05D809396BC</string>
 					<string>8D81B52F6757ADF61958DF91</string>
 					<string>F5113CCC648EB7ADEB621FF5</string>
+					<string>9612BB19B520FE1378478891</string>
 					<string>8596373E7BD73CE5C8FC9151</string>
 					<string>248C6D9CD43265E8CDA0E164</string>
 					<string>F93D7AE2C4678911B751095E</string>
@@ -4905,6 +4973,7 @@
 						<string>../../../of_v0.9.3_osx_release/addons/ofxOpenCv/libs/opencv/license</string>
 						<string>../../../of_v0.9.3_osx_release/addons/ofxOpenCv/src</string>
 						<string>../../../of_v0.9.3_osx_release/addons/ofxOpticalFlowFarneback/src</string>
+						<string>../../../of_v0.9.3_osx_release/addons/ofxTrueTypeFontUC/src</string>
 						<string>../../../of_v0.9.3_osx_release/addons/ofxVoronoi/libs</string>
 						<string>../../../of_v0.9.3_osx_release/addons/ofxVoronoi/libs/Voro++2D</string>
 						<string>../../../of_v0.9.3_osx_release/addons/ofxVoronoi/src</string>
@@ -4994,6 +5063,7 @@
 						<string>../../../of_v0.9.3_osx_release/addons/ofxOpenCv/libs/opencv/license</string>
 						<string>../../../of_v0.9.3_osx_release/addons/ofxOpenCv/src</string>
 						<string>../../../of_v0.9.3_osx_release/addons/ofxOpticalFlowFarneback/src</string>
+						<string>../../../of_v0.9.3_osx_release/addons/ofxTrueTypeFontUC/src</string>
 						<string>../../../of_v0.9.3_osx_release/addons/ofxVoronoi/libs</string>
 						<string>../../../of_v0.9.3_osx_release/addons/ofxVoronoi/libs/Voro++2D</string>
 						<string>../../../of_v0.9.3_osx_release/addons/ofxVoronoi/src</string>

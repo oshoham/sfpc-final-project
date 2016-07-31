@@ -4,15 +4,17 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "B6BCBA6C2F94EDE3DE542D065241FAC33CDAA8D7" : 0,
+    "183C10D9A6076F06706513038F80CE3782D38B30" : 0,
     "7E516C7A9DE20F9F1B181CA196DBE59D2936D5A9" : 0,
-    "183C10D9A6076F06706513038F80CE3782D38B30" : 0
+    "6E85F585BA7940AD33F8E74F0EE05D55511194B6" : 0,
+    "B6BCBA6C2F94EDE3DE542D065241FAC33CDAA8D7" : 0
   },
-  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "13541F00-81FE-4FE2-8BC3-31389E364AA1",
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "DE64C818-B64E-4CBB-B400-568A8CA2C675",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "B6BCBA6C2F94EDE3DE542D065241FAC33CDAA8D7" : "final-project\/",
+    "183C10D9A6076F06706513038F80CE3782D38B30" : "..\/of_v0.9.3_osx_release\/addons\/ofxVoronoi",
     "7E516C7A9DE20F9F1B181CA196DBE59D2936D5A9" : "..\/of_v0.9.3_osx_release\/addons\/ofxOpticalFlowFarneback",
-    "183C10D9A6076F06706513038F80CE3782D38B30" : "..\/of_v0.9.3_osx_release\/addons\/ofxVoronoi"
+    "6E85F585BA7940AD33F8E74F0EE05D55511194B6" : "..\/of_v0.9.3_osx_release\/addons\/ofxTrueTypeFontUC",
+    "B6BCBA6C2F94EDE3DE542D065241FAC33CDAA8D7" : "final-project\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "pixel-study",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -22,6 +24,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:madc\/ofxVoronoi.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "183C10D9A6076F06706513038F80CE3782D38B30"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:hironishihara\/ofxTrueTypeFontUC.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "6E85F585BA7940AD33F8E74F0EE05D55511194B6"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:timscaffidi\/ofxOpticalFlowFarneback.git",

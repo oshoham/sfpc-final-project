@@ -2,6 +2,7 @@
 #define asciiMosaicApp_h
 
 #include "ofMain.h"
+#include "ofxTrueTypeFontUC.h"
 #include "subApp.h"
 
 typedef struct {
@@ -20,9 +21,11 @@ class asciiMosaicApp : public subApp {
         
         ofBaseVideoGrabber * grabber;
         ofTrueTypeFont font;
-        
+        ofxTrueTypeFontUC ucFont;
+    
         vector<charWithBrightness> charactersByBrightness;
         ofFbo fbo;
+        map<int, ofFbo> chars;
 };
 
 #endif /* asciiMosaicApp_h */

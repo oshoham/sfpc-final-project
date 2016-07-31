@@ -1,4 +1,5 @@
 ofxGui
 ofxOpenCv
 ofxOpticalFlowFarneback
+ofxTrueTypeFontUC
 ofxVoronoi

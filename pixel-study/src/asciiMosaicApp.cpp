@@ -12,6 +12,7 @@ void asciiMosaicApp::setup(ofBaseVideoGrabber * videoGrabber){
     screenElementSize = 8;
     
     font.load("NotoSans-Regular.ttf", screenElementSize - 2, true, true, true);
+    ucFont.loadFont("NotoSans-Regular.tff", screenElementSize - 2);
     font.setLineHeight(18.0f);
     font.setLetterSpacing(1.037);
     
@@ -19,11 +20,15 @@ void asciiMosaicApp::setup(ofBaseVideoGrabber * videoGrabber){
     fbo.allocate(fboSize, fboSize);
     
     ofSetColor(0);
-    for (int i = 0; i < 255; i++) {
-        ofTTFCharacter character = font.getCharacterAsPoints(i);
+    for (int i = 200; i < 455; i++) {
+//        ofTTFCharacter character = font.getCharacterAsPoints(i);
         fbo.begin();
         ofClear(255, 255, 255, 255);
-        character.draw(fbo.getWidth() / 2, fbo.getHeight() / 2);
+        string s;
+        wchar_t c = static_cast<wchar_t>(i);
+        s += c;
+//        ucFont.drawString(s, fbo.getWidth() / 2, fbo.getHeight() / 2);
+        font.drawString(s, fbo.getWidth() / 2, fbo.getHeight() / 2);
         fbo.end();
         
         ofPixels pixels;
@@ -49,6 +54,9 @@ void asciiMosaicApp::setup(ofBaseVideoGrabber * videoGrabber){
 //--------------------------------------------------------------
 void asciiMosaicApp::update(float potentiometer1, float potentiometer2){
     grabber->update();
+    screenElementSize = ofMap(potentiometer2, 0, 1023, 8, 32);
+    font.load("NotoSans-Regular.ttf", screenElementSize - 2, true, true, true);
+    ucFont.loadFont("NotoSans-Regular.ttf", screenElementSize - 2);
 }
 
 //--------------------------------------------------------------
@@ -81,9 +89,11 @@ void asciiMosaicApp::draw(){
             averageLuma = 255 * pow(averageLuma / 255, 3);
             
             charWithBrightness cb = charactersByBrightness[averageLuma];
-            ofTTFCharacter character = font.getCharacterAsPoints(cb.value);
-            character.draw(i, j);
-            
+//            ofTTFCharacter character = font.getCharacterAsPoints(cb.value);
+            string s;
+            wchar_t c = static_cast<wchar_t>(cb.value);
+            s += c;
+            font.drawString(s, i, j);
         }
     }
 }
