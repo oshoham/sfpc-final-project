@@ -7,7 +7,7 @@ void opticalFlowApp::setup(ofBaseVideoGrabber * videoGrabber){
     flowSolver.setup(grabber->getWidth(), grabber->getHeight(), 0.35, 5, 10, 1, 3, 2.25, false, false);
     ofSetBackgroundAuto(false);
     
-    for (int i = 0; i < 2000; i++) {
+    for (int i = 0; i < 5000; i++) {
         particle p = particle();
         p.pos.set(ofRandom(0, ofGetWidth()), ofRandom(0, ofGetHeight()));
         p.vel.set(0, 0);
@@ -16,7 +16,7 @@ void opticalFlowApp::setup(ofBaseVideoGrabber * videoGrabber){
         lineWidths.push_back(ofRandom(1, 15));
         lineLengths.push_back(ofRandom(2, 4));
     }
-    ofSetFrameRate(15);
+//    ofSetFrameRate(15);
 }
 
 //--------------------------------------------------------------

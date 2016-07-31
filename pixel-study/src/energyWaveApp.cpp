@@ -90,7 +90,7 @@ void energyWaveApp::draw(){
                 ofPushMatrix();
                 ofTranslate(i, j);
                 ofRotateZ(ofMap(brightness, 0, 255, 0, 180));
-                ofDrawRectangle(0, 0, ofMap(brightness, 0, 255, 0, 7), 3);
+                ofDrawArrow(ofPoint(0, 0), ofPoint(10, 10));
                 ofPopMatrix();
             } else if (drawMode == 3) {
                 ofPushMatrix();
@@ -102,7 +102,7 @@ void energyWaveApp::draw(){
                 ofPushMatrix();
                 ofTranslate(i, j);
                 ofRotateZ(ofMap(brightness, 0, 255, 0, 180));
-                ofDrawArrow(ofPoint(0, 0), ofPoint(10, 10));
+                ofDrawRectangle(0, 0, ofMap(brightness, 0, 255, 0, 7), 3);
                 ofPopMatrix();
             }
         }

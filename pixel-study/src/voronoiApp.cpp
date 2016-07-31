@@ -1,105 +1,45 @@
 #include "voronoiApp.h"
-#include "ofxVoronoi.h"
+#include "PoissonGenerator.h"
 
 //--------------------------------------------------------------
 void voronoiApp::setup(ofBaseVideoGrabber * videoGrabber){
     grabber = videoGrabber;
     
-    k = 30;
-    radius = 10;
-    radius2 = radius * radius;
-    R = 3 * radius2;
-    cellSize = radius * SQRT1_2;
-    gridWidth = ceil(ofGetWidth() / cellSize);
-    gridHeight = ceil(ofGetHeight() / cellSize);
-    for (int i = 0; i < gridWidth * gridHeight; i++) {
-        ofPoint p(-1, -1);
-        grid.push_back(p);
-    }
-    sampleSize = 0;
+    numPoints = 10000;
     
-    //    for (int i = 0; i < 10000; i++) {
-    //        ofPoint s = poissonDiscSample();
-    //        if (s.x != -1 && s.y != -1) {
-    //            points.push_back(s);
-    //        }
-    //    }
+    PoissonGenerator::DefaultPRNG PRNG;
+    const auto poissonPoints = PoissonGenerator::GeneratePoissonPoints(numPoints, PRNG, 30, false);
+    for (auto & p : poissonPoints) {
+        ofPoint point(p.x * ofGetWidth(), p.y * ofGetHeight());
+        points.push_back(point);
+    }
+    
+    voronoi.setBounds(ofGetCurrentViewport());
+    voronoi.addPoints(points);
+    voronoi.generate();
 }
 
-// adapted from https://bl.ocks.org/mbostock/19168c663618b7f07158
-//--------------------------------------------------------------
-ofPoint voronoiApp::poissonDiscSample() {
-    if (!sampleSize) {
-        return sample(ofRandom(ofGetWidth()), ofRandom(ofGetHeight()));
-    }
-    
-    while (queue.size()) {
-        int i = ofRandom(queue.size());
-        ofPoint s = queue[i];
-        
-        for (int j = 0; j < k; ++j) {
-            float a = ofRandom(TWO_PI);
-            float r = sqrt(ofRandom(R) + radius2);
-            int x = s.x + r * cos(a);
-            int y = s.y + r * sin(a);
-            
-            if (0 <= x && x < ofGetWidth() && 0 <= y && y < ofGetHeight() && far(x, y)) {
-                return sample(x, y);
-            }
-        }
-        
-        queue.erase(queue.begin() + i);
-    }
-    
-    return ofPoint(-1, -1);
-}
 
-//--------------------------------------------------------------
-bool voronoiApp::far(int x, int y) {
-    int i = x / cellSize;
-    int j = y / cellSize;
-    int i0 = max(i - 2, 0);
-    int j0 = max(j - 2, 0);
-    int i1 = min(i + 3, gridWidth);
-    int j1 = min(j + 3, gridHeight);
-    
-    for (j = j0; j < j1; ++j) {
-        int o = j * gridWidth;
-        for (i = i0; i < i1; ++i) {
-            ofPoint s = grid[o + i];
-            if (s.x != -1 && s.y != -1) {
-                int dx = s.x - x;
-                int dy = s.y - y;
-                if (dx * dx + dy * dy < radius2) {
-                    return false;
-                }
-            }
-        }
-    }
-    
-    return true;
-}
-
-//--------------------------------------------------------------
-ofPoint voronoiApp::sample(int x, int y) {
-    ofPoint s = ofPoint(x, y);
-    queue.push_back(s);
-    grid[gridWidth * ( y / cellSize) + (x / cellSize)] = s;
-    sampleSize++;
-    return s;
-}
 
 //--------------------------------------------------------------
 void voronoiApp::update(float potentiometer1, float potentiometer2){
     grabber->update();
     
-    if (points.size() < 10000) {
-        for (int i = 0; i < 10; i++) {
-            ofPoint s = poissonDiscSample();
-            if (s.x != -1 && s.y != -1) {
-                points.push_back(s);
-            }
+    int newNumPoints = ofMap(potentiometer2, 0, 1023, 100, 10000);
+    
+    if (newNumPoints != numPoints) {
+        numPoints = newNumPoints;
+        points.clear();
+        PoissonGenerator::DefaultPRNG PRNG;
+        const auto poissonPoints = PoissonGenerator::GeneratePoissonPoints(numPoints, PRNG, 5, false);
+        for (auto & p : poissonPoints) {
+            ofPoint point(p.x * ofGetWidth(), p.y * ofGetHeight());
+            points.push_back(point);
         }
+        
+        voronoi.clear();
+        voronoi.addPoints(points);
+        voronoi.generate();
     }
 }
 
@@ -111,15 +51,8 @@ void voronoiApp::draw(){
     ofPixels pixels = grabber->getPixels();
     pixels.mirror(false, true);
     
-    ofxVoronoi voronoi;
-    voronoi.setBounds(ofGetCurrentViewport());
-    
-    for (auto & point : points) {
-        voronoi.addPoint(point);
-    }
-    
-    voronoi.generate();
     vector <ofxVoronoiCell> cells = voronoi.getCells();
+    voronoi.draw();
     
     for(int i = 0; i < cells.size(); i++) {
         // Draw cell borders
@@ -155,18 +88,5 @@ void voronoiApp::draw(){
 //--------------------------------------------------------------
 void voronoiApp::cleanup(){
     points.clear();
-    grid.clear();
-}
-
-//--------------------------------------------------------------
-void voronoiApp::keyPressed(int key){
-    if (key == ' ') {
-        points.clear();
-        grid.clear();
-        for (int i = 0; i < gridWidth * gridHeight; i++) {
-            ofPoint p(-1, -1);
-            grid.push_back(p);
-        }
-        sampleSize = 0;
-    }
+    voronoi.clear();
 }
