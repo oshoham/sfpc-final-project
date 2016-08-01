@@ -6,7 +6,7 @@ bool charWithBrightnessComparator(charWithBrightness & a, charWithBrightness & b
 }
 
 //--------------------------------------------------------------
-void asciiMosaicApp::setup(ofBaseVideoGrabber * videoGrabber){
+void asciiMosaicApp::setup(ofxRPiCameraVideoGrabber * videoGrabber){
     grabber = videoGrabber;
     
     screenElementSize = 8;
@@ -61,7 +61,8 @@ void asciiMosaicApp::draw(){
     
     ofRectangle viewport = ofGetCurrentViewport();
     
-    ofPixels pixels = grabber->getPixels();
+    ofPixels pixels;
+    pixels.setFromPixels(grabber->getPixels(), grabber->getWidth(), grabber->getHeight(), OF_IMAGE_COLOR); 
     pixels.mirror(false, true);
     
     for (int i = 0; i < grabber->getWidth(); i+=screenElementSize) {

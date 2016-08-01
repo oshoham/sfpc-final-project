@@ -1,7 +1,7 @@
 #include "opticalFlowApp.h"
 
 //--------------------------------------------------------------
-void opticalFlowApp::setup(ofBaseVideoGrabber * videoGrabber){
+void opticalFlowApp::setup(ofxRPiCameraVideoGrabber * videoGrabber){
     grabber = videoGrabber;
 //    videoGrabber->setDesiredFrameRate(30);
 //    flowSolver.setup(grabber->getWidth() / 2, grabber->getHeight() / 2, 0.35, 5, 10, 1, 3, 2.25, false, false);
@@ -63,7 +63,8 @@ void opticalFlowApp::update(float potentiometer1, float potentiometer2){
     }
     
     if (grabber->isFrameNew()) {
-        ofPixels pixels = grabber->getPixels();
+        ofPixels pixels;
+        pixels.setFromPixels(grabber->getPixels(), grabber->getWidth(), grabber->getHeight(), OF_IMAGE_COLOR);
         pixels.mirror(false, true);
         flowSolver.update(pixels.getData(), ofGetWidth(), ofGetHeight(), OF_IMAGE_COLOR);
         
@@ -91,9 +92,11 @@ void opticalFlowApp::update(float potentiometer1, float potentiometer2){
 
 //--------------------------------------------------------------
 void opticalFlowApp::draw(){
-    ofPixels pixels = grabber->getPixels();
+    ofPixels pixels;
+    pixels.setFromPixels(grabber->getPixels(), grabber->getWidth(), grabber->getHeight(), OF_IMAGE_COLOR);
     pixels.mirror(false, true);
     ofRectangle viewport = ofGetCurrentViewport();
+    
     for (int i = 0; i < particles.size(); i++) {
         if (viewport.inside(particles[i].pos)) {
             ofSetColor(pixels.getColor(particles[i].pos.x, particles[i].pos.y));

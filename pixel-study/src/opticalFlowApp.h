@@ -5,17 +5,18 @@
 #include "ofxOpticalFlowFarneback.h"
 #include "particle.h"
 #include "subApp.h"
+#include "ofxRPiCameraVideoGrabber.h"
 
 class opticalFlowApp: public subApp {
     public:
-        void setup(ofBaseVideoGrabber * videoGrabber);
+        void setup(ofxRPiCameraVideoGrabber * videoGrabber);
         void update(float potentiometer1, float potentiometer2);
         void draw();
         void cleanup();
         
         void drawLineAsRect(ofPoint startVec, ofPoint endVec, float thickness);
         
-        ofBaseVideoGrabber * grabber;
+        ofxRPiCameraVideoGrabber * grabber;
         ofxOpticalFlowFarneback flowSolver;
         vector<particle> particles;
         vector<ofPolyline> lines;

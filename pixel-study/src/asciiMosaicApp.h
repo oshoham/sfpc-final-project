@@ -3,6 +3,7 @@
 
 #include "ofMain.h"
 #include "subApp.h"
+#include "ofxRPiCameraVideoGrabber.h"
 
 typedef struct {
     int value;
@@ -11,14 +12,14 @@ typedef struct {
 
 class asciiMosaicApp : public subApp {
     public:
-        void setup(ofBaseVideoGrabber * videoGrabber);
+        void setup(ofxRPiCameraVideoGrabber * videoGrabber);
         void update(float potentiometer1, float potentiometer2);
         void draw();
         void cleanup();
         
         int screenElementSize;
         
-        ofBaseVideoGrabber * grabber;
+        ofxRPiCameraVideoGrabber * grabber;
         ofTrueTypeFont font;
     
         vector<charWithBrightness> charactersByBrightness;

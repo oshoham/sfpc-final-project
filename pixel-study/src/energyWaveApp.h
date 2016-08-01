@@ -3,10 +3,11 @@
 
 #include "ofMain.h"
 #include "subApp.h"
+#include "ofxRPiCameraVideoGrabber.h"
 
 class energyWaveApp : public subApp {
     public:
-        void setup(ofBaseVideoGrabber * videoGrabber);
+        void setup(ofxRPiCameraVideoGrabber * videoGrabber);
         void update(float potentiometer1, float potentiometer2);
         void draw();
         void cleanup();
@@ -17,7 +18,7 @@ class energyWaveApp : public subApp {
     
         int pixelStep;
     
-        ofBaseVideoGrabber * grabber;
+        ofxRPiCameraVideoGrabber * grabber;
         vector<vector<ofColor>> pixelColors;
         vector<vector<float>> energy;
         int drawMode;

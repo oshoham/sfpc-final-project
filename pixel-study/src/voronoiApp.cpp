@@ -2,7 +2,7 @@
 #include "PoissonGenerator.h"
 
 //--------------------------------------------------------------
-void voronoiApp::setup(ofBaseVideoGrabber * videoGrabber){
+void voronoiApp::setup(ofxRPiCameraVideoGrabber * videoGrabber){
     grabber = videoGrabber;
     
     numPoints = 10000;
@@ -46,7 +46,8 @@ void voronoiApp::draw(){
     ofBackground(0);
     ofSetColor(255);
     
-    ofPixels pixels = grabber->getPixels();
+    ofPixels pixels;
+    pixels.setFromPixels(grabber->getPixels(), grabber->getWidth(), grabber->getHeight(), OF_IMAGE_COLOR);
     pixels.mirror(false, true);
     
     vector <ofxVoronoiCell> cells = voronoi.getCells();

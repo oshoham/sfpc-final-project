@@ -1,7 +1,7 @@
 #include "energyWaveApp.h"
 
 //--------------------------------------------------------------
-void energyWaveApp::setup(ofBaseVideoGrabber * videoGrabber){
+void energyWaveApp::setup(ofxRPiCameraVideoGrabber * videoGrabber){
     grabber = videoGrabber;
     
     ofSetRectMode(OF_RECTMODE_CENTER);
@@ -30,7 +30,8 @@ void energyWaveApp::update(float potentiometer1, float potentiometer2){
         setColorMode();
     }
     
-    ofPixels pixels = grabber->getPixels();
+    ofPixels pixels;
+    pixels.setFromPixels(grabber->getPixels(), grabber->getWidth(), grabber->getHeight(), OF_IMAGE_COLOR);
     pixels.mirror(false, true);
     
     for (int i = 0; i < grabber->getWidth(); i+=pixelStep) {
@@ -61,7 +62,8 @@ void energyWaveApp::update(float potentiometer1, float potentiometer2){
 void energyWaveApp::draw(){
     ofBackground(0);
     
-    ofPixels pixels = grabber->getPixels();
+    ofPixels pixels;
+    pixels.setFromPixels(grabber->getPixels(), grabber->getWidth(), grabber->getHeight(), OF_IMAGE_COLOR);
     pixels.mirror(false, true);
     
     // proper way to mosaic is to average the image, but we're just gonna step by 10

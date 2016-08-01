@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxGui.h"
+#include "ofxRPiCameraVideoGrabber.h"
 #include "subApp.h"
 #include "opticalFlowApp.h"
 #include "asciiMosaicApp.h"
@@ -39,7 +40,8 @@ class ofApp : public ofBaseApp{
     
         float lastButtonPress;
     
-        ofVideoGrabber grabber;
+        ofxRPiCameraVideoGrabber grabber;
+        OMXCameraSettings omxCameraSettings;
         opticalFlowApp flowApp;
         asciiMosaicApp mosaicApp;
         energyWaveApp waveApp;

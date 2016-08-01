@@ -3,7 +3,13 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofSetWindowShape(ofGetScreenWidth(), ofGetScreenHeight());
-    grabber.setup(ofGetWidth(), ofGetHeight());
+    omxCameraSettings.width = ofGetWidth();
+    omxCameraSettings.height = ofGetHeight();
+    omxCameraSettings.framerate = 30;
+    omxCameraSettings.isUsingTexture = true;
+    omxCameraSettings.enablePixels = true;
+    grabber.setup(omxCameraSettings);
+    
     currentApp = &flowApp;
     currentApp->setup(&grabber);
     
