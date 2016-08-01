@@ -22,9 +22,7 @@ void voronoiApp::setup(ofBaseVideoGrabber * videoGrabber){
 
 
 //--------------------------------------------------------------
-void voronoiApp::update(float potentiometer1, float potentiometer2){
-    grabber->update();
-    
+void voronoiApp::update(float potentiometer1, float potentiometer2){    
     int newNumPoints = ofMap(potentiometer2, 0, 1023, 100, 10000);
     
     if (newNumPoints != numPoints) {

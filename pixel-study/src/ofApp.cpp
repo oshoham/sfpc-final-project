@@ -115,6 +115,7 @@ void ofApp::modeChanged(int & value) {
 //--------------------------------------------------------------
 void ofApp::update(){
     updateArduino();
+    grabber.update();
     currentApp->update(potentiometer1, potentiometer2);
 }
 

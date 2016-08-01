@@ -62,7 +62,6 @@ void opticalFlowApp::update(float potentiometer1, float potentiometer2){
         numParticles = newNumParticles;
     }
     
-    grabber->update();
     if (grabber->isFrameNew()) {
         ofPixels pixels = grabber->getPixels();
         pixels.mirror(false, true);

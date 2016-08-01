@@ -50,7 +50,6 @@ void asciiMosaicApp::setup(ofBaseVideoGrabber * videoGrabber){
 
 //--------------------------------------------------------------
 void asciiMosaicApp::update(float potentiometer1, float potentiometer2){
-    grabber->update();
     screenElementSize = ofMap(potentiometer2, 0, 1023, 64, 8);
     font.load("NotoSans-Regular.ttf", screenElementSize - 2, true, true, true);
 }

@@ -21,9 +21,7 @@ void energyWaveApp::setup(ofBaseVideoGrabber * videoGrabber){
 }
 
 //--------------------------------------------------------------
-void energyWaveApp::update(float potentiometer1, float potentiometer2){
-    grabber->update();
-    
+void energyWaveApp::update(float potentiometer1, float potentiometer2){    
     drawMode = ofMap(potentiometer2, 0, 1023, 1, 4);
     int newColorMode = ofMap(potentiometer1, 0, 1023, 1, 9);
     
