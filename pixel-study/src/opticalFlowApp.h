@@ -22,6 +22,10 @@ class opticalFlowApp: public subApp {
         vector<int> lineWidths;
         vector<int> lineLengths;
         ofImage frame;
+    
+        int maxLineLength;
+        int maxLineWidth;
+        int numParticles;
 };
 
 #endif /* opticalFlowApp_h */

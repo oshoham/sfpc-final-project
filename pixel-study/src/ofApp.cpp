@@ -2,8 +2,8 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    grabber.setup(ofGetScreenWidth(), ofGetScreenHeight());
     ofSetWindowShape(ofGetScreenWidth(), ofGetScreenHeight());
+    grabber.setup(ofGetWidth(), ofGetHeight());
     currentApp = &flowApp;
     currentApp->setup(&grabber);
     
