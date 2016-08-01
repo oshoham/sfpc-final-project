@@ -1,9 +1,11 @@
 #ifndef subApp_h
 #define subApp_h
 
+#include "ofxRPiCameraVideoGrabber.h"
+
 class subApp {
     public:
-        virtual void setup(ofBaseVideoGrabber * videoGrabber) = 0;
+        virtual void setup(ofxRPiCameraVideoGrabber * videoGrabber) = 0;
         virtual void update(float potentiometer1, float potentiometer2) = 0;
         virtual void draw() = 0;
         virtual void cleanup() = 0;
