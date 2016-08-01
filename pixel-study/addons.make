@@ -1,5 +1,6 @@
 ofxGui
 ofxOpenCv
 ofxOpticalFlowFarneback
+ofxRPiCameraVideoGrabber
 ofxTrueTypeFontUC
 ofxVoronoi
