@@ -14,7 +14,7 @@ void opticalFlowApp::setup(ofBaseVideoGrabber * videoGrabber){
     
     for (int i = 0; i < numParticles; i++) {
         particle p = particle();
-        p.pos.set(ofRandom(0, ofGetWidth()), ofRandom(0, ofGetHeight()));
+        p.pos.set(ofRandom(0, grabber->getWidth()), ofRandom(0, grabber->getHeight()));
         p.vel.set(0, 0);
         particles.push_back(p);
         lines.push_back(ofPolyline());
@@ -45,7 +45,7 @@ void opticalFlowApp::update(float potentiometer1, float potentiometer2){
         if (numParticles < newNumParticles) {
             for (int k = 0; k < newNumParticles - numParticles; k++) {
                 particle p = particle();
-                p.pos.set(ofRandom(0, ofGetWidth()), ofRandom(0, ofGetHeight()));
+                p.pos.set(ofRandom(0, grabber->getWidth()), ofRandom(0, grabber->getHeight()));
                 p.vel.set(0, 0);
                 particles.push_back(p);
                 lines.push_back(ofPolyline());
@@ -65,12 +65,12 @@ void opticalFlowApp::update(float potentiometer1, float potentiometer2){
     if (grabber->isFrameNew()) {
         ofPixels pixels = grabber->getPixels();
         pixels.mirror(false, true);
-        flowSolver.update(pixels.getData(), ofGetWidth(), ofGetHeight(), OF_IMAGE_COLOR);
+        flowSolver.update(pixels.getData(), grabber->getWidth(), grabber->getHeight(), OF_IMAGE_COLOR);
         
         for (int i = 0; i < particles.size(); i++) {
             particles[i].resetForce();
             particles[i].addForce(0.0, 0.2);
-            ofPoint flowVelocity = flowSolver.getVelAtNorm(particles[i].pos.x / (float)ofGetWidth(), particles[i].pos.y / (float)ofGetHeight()) * 0.5;
+            ofPoint flowVelocity = flowSolver.getVelAtNorm(particles[i].pos.x / (float)grabber->getWidth(), particles[i].pos.y / (float)grabber->getHeight()) * 0.5;
             particles[i].addForce(flowVelocity.x, flowVelocity.y);
             particles[i].addDampingForce();
             particles[i].update();
@@ -93,7 +93,7 @@ void opticalFlowApp::update(float potentiometer1, float potentiometer2){
 void opticalFlowApp::draw(){
     ofPixels pixels = grabber->getPixels();
     pixels.mirror(false, true);
-    ofRectangle viewport = ofGetCurrentViewport();
+    ofRectangle viewport = ofRectangle(0, 0, grabber->getWidth(), grabber->getHeight());
     for (int i = 0; i < particles.size(); i++) {
         if (viewport.inside(particles[i].pos)) {
             ofSetColor(pixels.getColor(particles[i].pos.x, particles[i].pos.y));

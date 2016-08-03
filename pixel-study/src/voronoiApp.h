@@ -13,12 +13,15 @@ class voronoiApp : public subApp {
         void update(float potentiometer1, float potentiometer2);
         void draw();
         void cleanup();
-        
+    
+        void recalculateVoronoi();
+    
         vector<ofPoint> points;
         ofBaseVideoGrabber * grabber;
     
         ofxVoronoi voronoi;
         int numPoints;
+        int k;
 };
 
 #endif /* voronoiApp_h */

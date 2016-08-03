@@ -15,14 +15,20 @@ class asciiMosaicApp : public subApp {
         void update(float potentiometer1, float potentiometer2);
         void draw();
         void cleanup();
-        
+    
+        void sortCharacters();
+    
         int screenElementSize;
-        
+        int characterRangeStart;
+        int characterRangeSize;
+    
         ofBaseVideoGrabber * grabber;
         ofTrueTypeFont font;
     
         vector<charWithBrightness> charactersByBrightness;
         ofFbo fbo;
+    
+        int fontMode;
 };
 
 #endif /* asciiMosaicApp_h */

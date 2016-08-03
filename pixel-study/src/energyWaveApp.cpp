@@ -1,4 +1,4 @@
-#include "energyWaveApp.h"
+ #include "energyWaveApp.h"
 
 //--------------------------------------------------------------
 void energyWaveApp::setup(ofBaseVideoGrabber * videoGrabber){

@@ -6,38 +6,38 @@ void voronoiApp::setup(ofBaseVideoGrabber * videoGrabber){
     grabber = videoGrabber;
     
     numPoints = 10000;
+    k = 5;
     
+    voronoi.setBounds(ofRectangle(0, 0, grabber->getWidth(), grabber->getHeight()));
+    
+    recalculateVoronoi();
+}
+
+//--------------------------------------------------------------
+void voronoiApp::recalculateVoronoi(){
+    points.clear();
+    voronoi.clear();
+
     PoissonGenerator::DefaultPRNG PRNG;
-    const auto poissonPoints = PoissonGenerator::GeneratePoissonPoints(numPoints, PRNG, 30, false);
+    const auto poissonPoints = PoissonGenerator::GeneratePoissonPoints(numPoints, PRNG, k, false);
     for (auto & p : poissonPoints) {
-        ofPoint point(p.x * ofGetWidth(), p.y * ofGetHeight());
+        ofPoint point(p.x * grabber->getWidth(), p.y * grabber->getHeight());
         points.push_back(point);
     }
     
-    voronoi.setBounds(ofGetCurrentViewport());
     voronoi.addPoints(points);
     voronoi.generate();
-}
 
+}
 
 
 //--------------------------------------------------------------
 void voronoiApp::update(float potentiometer1, float potentiometer2){    
-    int newNumPoints = ofMap(potentiometer2, 0, 1023, 100, 10000);
+    int newNumPoints = ofMap(potentiometer2, 0, 1023, 8000, 100);
     
     if (newNumPoints != numPoints) {
         numPoints = newNumPoints;
-        points.clear();
-        PoissonGenerator::DefaultPRNG PRNG;
-        const auto poissonPoints = PoissonGenerator::GeneratePoissonPoints(numPoints, PRNG, 5, false);
-        for (auto & p : poissonPoints) {
-            ofPoint point(p.x * ofGetWidth(), p.y * ofGetHeight());
-            points.push_back(point);
-        }
-        
-        voronoi.clear();
-        voronoi.addPoints(points);
-        voronoi.generate();
+        recalculateVoronoi();
     }
 }
 

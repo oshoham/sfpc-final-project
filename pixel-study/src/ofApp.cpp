@@ -3,7 +3,9 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofSetWindowShape(ofGetScreenWidth(), ofGetScreenHeight());
-    grabber.setup(ofGetWidth(), ofGetHeight());
+    grabber.setDeviceID(1);
+    grabber.setup(ofGetWidth() * 2.0 / 3, ofGetHeight() * 2.0 / 3);
+//    grabber.setup(ofGetWidth(), ofGetHeight());
     currentApp = &flowApp;
     currentApp->setup(&grabber);
     
@@ -17,7 +19,7 @@ void ofApp::setup(){
     // replace the string below with the serial port for your Arduino board
     // you can get this from the Arduino application or via command line
     // for OSX, in your terminal type "ls /dev/tty.*" to get a list of serial devices
-    ard.connect("/dev/tty.usbmodem1411", 57600);
+    ard.connect("/dev/tty.usbmodem1421", 57600);
     
     // listen for EInitialized notification. this indicates that
     // the arduino is ready to receive commands and it is safe to
@@ -121,14 +123,25 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    ofPushMatrix();
+    ofScale(3 / 2.0, 3 / 2.0);
     currentApp->draw();
-    panel.draw();
+    ofPopMatrix();
+//    panel.draw();
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     if (key == ' ') {
         mode = (mode + 1) % 4;
+    } else if (key == OF_KEY_UP && potentiometer1 < 1023) {
+            potentiometer1 += 10;
+    } else if (key == OF_KEY_DOWN && potentiometer1 > 0) {
+        potentiometer1 -= 10;
+    } else if (key == OF_KEY_RIGHT && potentiometer2 < 1023) {
+        potentiometer2 += 10;
+    } else if (key == OF_KEY_LEFT && potentiometer2 > 0) {
+        potentiometer2 -= 10;
     }
 }
 
